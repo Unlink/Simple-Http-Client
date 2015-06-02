@@ -203,4 +203,28 @@ public class CookieManager {
 	return store.toString();
     }
     
+	
+	public String getCookies(String paDomain) {
+		Map<String, Map<String, String>> domainStore = store.get(paDomain);
+		if (domainStore == null) {
+			return "";
+		}
+		StringBuilder cookieStringBuffer = new StringBuilder();
+		Iterator cookieNames = domainStore.keySet().iterator();
+		while (cookieNames.hasNext()) {
+			String cookieName = (String) cookieNames.next();
+			Map<String, String> cookie = domainStore.get(cookieName);
+			if (isNotExpired((String) cookie.get(EXPIRES))) {
+				cookieStringBuffer.append(cookieName);
+				cookieStringBuffer.append("=");
+				cookieStringBuffer.append((String) cookie.get(cookieName));
+				if (cookieNames.hasNext()) {
+					cookieStringBuffer.append(SET_COOKIE_SEPARATOR);
+				}
+			}
+		}
+
+		return cookieStringBuffer.toString();
+	}
+	
 }

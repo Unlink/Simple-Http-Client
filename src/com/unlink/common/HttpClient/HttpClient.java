@@ -115,5 +115,9 @@ public class HttpClient {
         Scanner s = new Scanner(conn.getInputStream(), paEnconding).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
+	
+	public String getCookies(String paDomain) {
+		return aCookieManager.getCookies(paDomain);
+	}
     
 }
